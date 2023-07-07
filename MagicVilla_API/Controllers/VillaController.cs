@@ -11,14 +11,48 @@ namespace MagicVilla_API.Controllers
 	public class VillaController : ControllerBase
 	{
 		[HttpGet]
-		public IEnumerable<VillaDto> GetVillas()
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult< IEnumerable<VillaDto>> GetVillas()
 		{
-			return VillaStore.villasList;
+			return Ok(VillaStore.villasList);
 		}
-		[HttpGet("id")]
-		public VillaDto GetVilla(int id)
+		[HttpGet("id:int", Name ="Getvilla")]
+		[ProducesResponseType(200)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(404)]
+		public ActionResult<VillaDto> GetVilla(int id)
 		{
-			return VillaStore.villasList.FirstOrDefault(v => v.Id == id);
+			if (id== 0)
+			{
+				return BadRequest();
+			}
+			var villa = VillaStore.villasList.FirstOrDefault(v => v.Id == id);
+			if (villa == null){
+				return NotFound();
+			}
+			return Ok(villa);
+		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+		public ActionResult<VillaDto> CrearVilla([FromBody] VillaDto villaDto)
+		{
+			if (villaDto == null)
+			{
+				return BadRequest(villaDto);
+			}
+			if (villaDto.Id > 0)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+			villaDto.Id = VillaStore.villasList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
+			VillaStore.villasList.Add(villaDto);
+			return CreatedAtRoute("GetVilla", new {id=villaDto.Id}, villaDto);
+
 		}
 	}
 }
