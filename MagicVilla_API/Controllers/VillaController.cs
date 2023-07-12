@@ -14,22 +14,22 @@ namespace MagicVilla_API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult< IEnumerable<VillaDto>> GetVillas()
+		public ActionResult<IEnumerable<VillaDto>> GetVillas()
 		{
 			return Ok(VillaStore.villasList);
 		}
-		[HttpGet("id:int", Name ="Getvilla")]
+		[HttpGet("id:int", Name = "Getvilla")]
 		[ProducesResponseType(200)]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(404)]
 		public ActionResult<VillaDto> GetVilla(int id)
 		{
-			if (id== 0)
+			if (id == 0)
 			{
 				return BadRequest();
 			}
 			var villa = VillaStore.villasList.FirstOrDefault(v => v.Id == id);
-			if (villa == null){
+			if (villa == null) {
 				return NotFound();
 			}
 			return Ok(villa);
@@ -41,6 +41,15 @@ namespace MagicVilla_API.Controllers
 
 		public ActionResult<VillaDto> CrearVilla([FromBody] VillaDto villaDto)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			if (VillaStore.villasList.FirstOrDefault(v => v.Nombre.ToLower() == villaDto.Nombre.ToLower()) != null)
+			{
+				ModelState.AddModelError("NombreExiste", "La villa ya existe");
+				return BadRequest(ModelState);
+			}
 			if (villaDto == null)
 			{
 				return BadRequest(villaDto);
@@ -51,8 +60,28 @@ namespace MagicVilla_API.Controllers
 			}
 			villaDto.Id = VillaStore.villasList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
 			VillaStore.villasList.Add(villaDto);
-			return CreatedAtRoute("GetVilla", new {id=villaDto.Id}, villaDto);
+			return CreatedAtRoute("GetVilla", new { id = villaDto.Id }, villaDto);
 
+		}
+
+		[HttpDelete("{id:int}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+
+		public IActionResult DeleteVilla(int id)
+		{
+			if (id == 0)
+			{
+				return BadRequest();
+			}
+			var villa = VillaStore.villasList.FirstOrDefault(v => v.Id == id);
+			if (villa == null)
+			{
+				return NotFound();
+			}
+			VillaStore.villasList.Remove(villa);
+			return NoContent();
 		}
 	}
 }
