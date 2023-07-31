@@ -54,7 +54,7 @@ namespace MagicVilla_API.Controllers
 		}
 		
 
-		[HttpGet("id:int", Name = "GetNumerovilla")]
+		[HttpGet("{id:int}", Name = "GetNumerovilla")]
 		[ProducesResponseType(200)]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(404)]
