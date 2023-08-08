@@ -10,7 +10,7 @@ namespace MagicVilla_API.Modelos
         [Required]
         public int VillaId { get; set; }
 		[ForeignKey("VillaId")]
-		public Villa villa { get; set; }
+		public Villa Villa { get; set; }
         public string DetalleEspecial { get; set; }
         public DateTime FechaCreacion { get; set; }
 		public DateTime FechaActualizacion { get; set; }
