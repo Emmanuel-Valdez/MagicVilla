@@ -81,3 +81,5 @@ D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\ru
 D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\AutoMapper.dll
 D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+D:\Programacion\Csharpya\Proyectos\MagicVilla\MagicVilla_API\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll

@@ -20,8 +20,8 @@ namespace MagicVilla_Web.Services
 			{
 				APITipo = DS.APITipo.POST,
 				Datos = dto,
-				Url = _villaUrl + "/api/usuario/login"
-			});
+				Url = _villaUrl + "/api/v1/usuario/login"
+            });
 		}
 
 		public Task<T> Registrar<T>(RegistroRequestDto dto)
@@ -30,8 +30,8 @@ namespace MagicVilla_Web.Services
 			{
 				APITipo = DS.APITipo.POST,
 				Datos = dto,
-				Url = _villaUrl + "/api/usuario/registrar"
-			});
+				Url = _villaUrl + "/api/v1/usuario/registrar"
+            });
 		}
 	}
 }
