@@ -33,7 +33,7 @@ namespace MagicVilla_API.Controllers.v1
         }
        
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -60,7 +60,7 @@ namespace MagicVilla_API.Controllers.v1
        
 
         [HttpGet("{id:int}", Name = "GetNumerovilla")]
-        [Authorize]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -102,7 +102,7 @@ namespace MagicVilla_API.Controllers.v1
 
         }
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -156,7 +156,7 @@ namespace MagicVilla_API.Controllers.v1
         }
 
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -192,7 +192,7 @@ namespace MagicVilla_API.Controllers.v1
             return BadRequest(_response);
         }
         [HttpPut("{id:int}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateNumeroVilla(int id, [FromBody] NumeroVillaUpdateDto updateDto)
@@ -215,32 +215,6 @@ namespace MagicVilla_API.Controllers.v1
             return Ok(_response);
         }
 
-        //[HttpPatch("{id:int}")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public async Task< IActionResult> UpdatePartialVilla(int id,JsonPatchDocument<VillaUpdateDto> patchDto)
-        //{
-        //	if (patchDto == null || id == 0)
-        //	{
-        //		return BadRequest();
-        //	}
-        //	//var villa = VillaStore.villasList.FirstOrDefault(v => v.Id == id); no es necesario
-
-        //	var villa = await _villaRepo.Obtener(v=>v.Id == id, tracked:false);
-        //	VillaUpdateDto villaDto = _mapper.Map<VillaUpdateDto>(villa);
-
-        //	if (villa == null) return BadRequest();
-
-        //	patchDto.ApplyTo(villaDto, ModelState);
-        //	if (!ModelState.IsValid)
-        //	{
-        //		return BadRequest(ModelState);
-        //	}
-        //	Villa modelo = _mapper.Map<Villa>(villaDto);
-        //	await _villaRepo.Actualizar(modelo);
-        //	_response.statusCode = HttpStatusCode.NoContent;
-
-        //	return Ok(_response);
-        //}
+        
     }
 }
